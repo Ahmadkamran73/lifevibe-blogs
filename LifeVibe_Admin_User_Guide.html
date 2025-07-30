@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeVibe Admin & Editor User Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2980b9;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .step {
+            background-color: #f8f9fa;
+            border-left: 3px solid #28a745;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        code {
+            background-color: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .feature-box {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            background-color: #f8f9fa;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LifeVibe Blog Platform<br>Admin & Editor User Guide</h1>
+        
+        <div class="info">
+            <strong>Document Version:</strong> 1.0<br>
+            <strong>Platform:</strong> LifeVibe Blog Management System<br>
+            <strong>Audience:</strong> Administrators and Content Editors<br>
+            <strong>Last Updated:</strong> January 2025
+        </div>
+
+        <h2>Table of Contents</h2>
+        <ol>
+            <li><a href="#overview">Platform Overview</a></li>
+            <li><a href="#access">Accessing the Admin Panel</a></li>
+            <li><a href="#dashboard">Dashboard Navigation</a></li>
+            <li><a href="#content-management">Content Management</a></li>
+            <li><a href="#post-creation">Creating New Posts</a></li>
+            <li><a href="#post-editing">Editing Existing Posts</a></li>
+            <li><a href="#post-deletion">Deleting Posts</a></li>
+            <li><a href="#categories">Managing Categories</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#support">Support Information</a></li>
+        </ol>
+
+        <h2 id="overview">1. Platform Overview</h2>
+        
+        <p>LifeVibe is a modern blog platform designed for sharing content across three main lifestyle categories. The platform features a React-based frontend with a Node.js/Express backend, providing a smooth and responsive user experience.</p>
+
+        <div class="feature-box">
+            <h3>Key Features:</h3>
+            <ul>
+                <li><strong>Content Management:</strong> Create, edit, and delete blog posts</li>
+                <li><strong>Category Organization:</strong> Posts organized into Travel, Food, and Wellness categories</li>
+                <li><strong>Responsive Design:</strong> Mobile-friendly interface using Bootstrap</li>
+                <li><strong>Admin Authentication:</strong> Secure login system for administrators</li>
+                <li><strong>Image Support:</strong> Add images to posts via URL links</li>
+                <li><strong>Real-time Updates:</strong> Immediate reflection of changes on the live site</li>
+            </ul>
+        </div>
+
+        <h2 id="access">2. Accessing the Admin Panel</h2>
+
+        <h3>2.1 Login Process</h3>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Navigate to the admin login page by visiting: <code>[website-url]/admin/login</code>
+        </div>
+        
+        <div class="step">
+            <strong>Step 2:</strong> Enter your admin credentials:
+            <ul>
+                <li>Username: Your assigned admin username</li>
+                <li>Password: Your secure admin password</li>
+            </ul>
+        </div>
+        
+        <div class="step">
+            <strong>Step 3:</strong> Click the "Login" button to access the admin dashboard
+        </div>
+
+        <div class="warning">
+            <strong>Security Note:</strong> Your admin session will automatically expire for security purposes. You'll need to log in again if you've been inactive for an extended period.
+        </div>
+
+        <h3>2.2 Login Troubleshooting</h3>
+        
+        <table>
+            <tr>
+                <th>Issue</th>
+                <th>Solution</th>
+            </tr>
+            <tr>
+                <td>Invalid username/password error</td>
+                <td>Double-check credentials and contact system administrator if needed</td>
+            </tr>
+            <tr>
+                <td>Page won't load</td>
+                <td>Check internet connection and try refreshing the page</td>
+            </tr>
+            <tr>
+                <td>Redirected to homepage</td>
+                <td>Clear browser cache and cookies, then try again</td>
+            </tr>
+        </table>
+
+        <h2 id="dashboard">3. Dashboard Navigation</h2>
+
+        <p>Once logged in, you'll have access to the main dashboard with the following navigation options:</p>
+
+        <div class="feature-box">
+            <h3>Navigation Menu:</h3>
+            <ul>
+                <li><strong>Home:</strong> View the public blog homepage</li>
+                <li><strong>Add Post:</strong> Create new blog content</li>
+                <li><strong>Manage Posts:</strong> View, edit, or delete existing posts</li>
+                <li><strong>Logout:</strong> Securely exit the admin panel</li>
+            </ul>
+        </div>
+
+        <h2 id="content-management">4. Content Management</h2>
+
+        <p>The LifeVibe platform allows you to manage blog posts across three predefined categories:</p>
+
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Content Examples</th>
+            </tr>
+            <tr>
+                <td><strong>Travel</strong></td>
+                <td>Travel experiences, destinations, tips</td>
+                <td>Destination guides, travel stories, itineraries</td>
+            </tr>
+            <tr>
+                <td><strong>Food</strong></td>
+                <td>Culinary content, recipes, restaurant reviews</td>
+                <td>Recipes, food reviews, cooking tips</td>
+            </tr>
+            <tr>
+                <td><strong>Wellness</strong></td>
+                <td>Health, fitness, mental well-being content</td>
+                <td>Workout routines, meditation guides, health tips</td>
+            </tr>
+        </table>
+
+        <h2 id="post-creation">5. Creating New Posts</h2>
+
+        <h3>5.1 Accessing the Post Creation Form</h3>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Click "Add Post" in the navigation menu
+        </div>
+        
+        <div class="step">
+            <strong>Step 2:</strong> You'll be redirected to the post creation form
+        </div>
+
+        <h3>5.2 Filling Out the Post Form</h3>
+
+        <div class="feature-box">
+            <h3>Required Fields:</h3>
+            
+            <p><strong>Title:</strong></p>
+            <ul>
+                <li>Enter a compelling and descriptive title for your post</li>
+                <li>Keep titles concise but informative (recommended: 50-60 characters)</li>
+                <li>Use title case capitalization</li>
+            </ul>
+
+            <p><strong>Content:</strong></p>
+            <ul>
+                <li>Write your main blog content in the large text area</li>
+                <li>Use clear paragraphs and proper formatting</li>
+                <li>Include engaging introduction and conclusion</li>
+                <li>The system supports plain text formatting</li>
+            </ul>
+
+            <p><strong>Category:</strong></p>
+            <ul>
+                <li>Select from the dropdown: Travel, Food, or Wellness</li>
+                <li>Choose the category that best fits your content theme</li>
+            </ul>
+
+            <p><strong>Author:</strong></p>
+            <ul>
+                <li>Enter the author's name or pen name</li>
+                <li>Be consistent with author naming across posts</li>
+            </ul>
+
+            <p><strong>Image URL (Optional):</strong></p>
+            <ul>
+                <li>Provide a direct link to an image that represents your post</li>
+                <li>Ensure the image URL is publicly accessible</li>
+                <li>Recommended image dimensions: 800x600 pixels or similar aspect ratio</li>
+                <li>Supported formats: JPG, PNG, WEBP</li>
+            </ul>
+        </div>
+
+        <h3>5.3 Publishing Your Post</h3>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Review all fields for accuracy and completeness
+        </div>
+        
+        <div class="step">
+            <strong>Step 2:</strong> Click the "Create Post" button
+        </div>
+        
+        <div class="step">
+            <strong>Step 3:</strong> Wait for the success confirmation message
+        </div>
+        
+        <div class="step">
+            <strong>Step 4:</strong> Your post will be immediately live on the website
+        </div>
+
+        <h2 id="post-editing">6. Editing Existing Posts</h2>
+
+        <h3>6.1 Finding Posts to Edit</h3>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Navigate to the homepage to view all published posts
+        </div>
+        
+        <div class="step">
+            <strong>Step 2:</strong> Click on any post title to view the full post
+        </div>
+        
+        <div class="step">
+            <strong>Step 3:</strong> Look for the "Edit" button (visible only to logged-in admins)
+        </div>
+
+        <h3>6.2 Making Edits</h3>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Click the "Edit" button on the post you want to modify
+        </div>
+        
+        <div class="step">
+            <strong>Step 2:</strong> The edit form will load with current post data pre-filled
+        </div>
+        
+        <div class="step">
+            <strong>Step 3:</strong> Make your desired changes to any field
+        </div>
+        
+        <div class="step">
+            <strong>Step 4:</strong> Click "Update Post" to save changes
+        </div>
+
+        <div class="info">
+            <strong>Note:</strong> All changes are saved immediately and will be reflected on the live website. There is no draft or preview mode, so ensure your edits are final before saving.
+        </div>
+
+        <h2 id="post-deletion">7. Deleting Posts</h2>
+
+        <div class="warning">
+            <strong>Warning:</strong> Post deletion is permanent and cannot be undone. Always double-check before deleting content.
+        </div>
+
+        <h3>7.1 Deletion Process</h3>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Navigate to the post you want to delete
+        </div>
+        
+        <div class="step">
+            <strong>Step 2:</strong> Click the "Delete" button (visible only to logged-in admins)
+        </div>
+        
+        <div class="step">
+            <strong>Step 3:</strong> Confirm the deletion when prompted
+        </div>
+        
+        <div class="step">
+            <strong>Step 4:</strong> The post will be immediately removed from the website
+        </div>
+
+        <h2 id="categories">8. Managing Categories</h2>
+
+        <p>The LifeVibe platform currently supports three fixed categories: Travel, Food, and Wellness. These categories cannot be modified through the admin interface.</p>
+
+        <div class="info">
+            <strong>Category Guidelines:</strong>
+            <ul>
+                <li><strong>Travel:</strong> Use for content about destinations, travel experiences, tips, and itineraries</li>
+                <li><strong>Food:</strong> Use for recipes, restaurant reviews, cooking techniques, and culinary experiences</li>
+                <li><strong>Wellness:</strong> Use for health tips, fitness routines, mental wellness, and lifestyle advice</li>
+            </ul>
+        </div>
+
+        <h2 id="best-practices">9. Best Practices</h2>
+
+        <h3>9.1 Content Quality</h3>
+        <ul>
+            <li><strong>Proofread:</strong> Always check for spelling and grammar errors before publishing</li>
+            <li><strong>Engaging Titles:</strong> Create titles that are both informative and compelling</li>
+            <li><strong>Consistent Voice:</strong> Maintain a consistent tone and style across all posts</li>
+            <li><strong>Appropriate Length:</strong> Aim for 300-1500 words depending on the topic</li>
+            <li><strong>Clear Structure:</strong> Use clear paragraphs and logical flow</li>
+        </ul>
+
+        <h3>9.2 Image Management</h3>
+        <ul>
+            <li><strong>Quality Images:</strong> Use high-resolution, relevant images</li>
+            <li><strong>Copyright Compliance:</strong> Ensure you have rights to use all images</li>
+            <li><strong>Consistent Sizing:</strong> Try to use images with similar aspect ratios</li>
+            <li><strong>Descriptive Images:</strong> Choose images that clearly relate to your content</li>
+        </ul>
+
+        <h3>9.3 SEO Considerations</h3>
+        <ul>
+            <li><strong>Descriptive Titles:</strong> Include relevant keywords in your titles</li>
+            <li><strong>Category Relevance:</strong> Ensure posts are in the most appropriate category</li>
+            <li><strong>Content Depth:</strong> Provide comprehensive, valuable information</li>
+            <li><strong>Regular Updates:</strong> Keep content fresh and up-to-date</li>
+        </ul>
+
+        <h2 id="troubleshooting">10. Troubleshooting</h2>
+
+        <h3>10.1 Common Issues and Solutions</h3>
+
+        <table>
+            <tr>
+                <th>Problem</th>
+                <th>Possible Cause</th>
+                <th>Solution</th>
+            </tr>
+            <tr>
+                <td>Cannot access Add Post page</td>
+                <td>Not logged in as admin</td>
+                <td>Ensure you're logged in with admin credentials</td>
+            </tr>
+            <tr>
+                <td>Image not displaying</td>
+                <td>Invalid or inaccessible image URL</td>
+                <td>Check the image URL is correct and publicly accessible</td>
+            </tr>
+            <tr>
+                <td>Post creation fails</td>
+                <td>Missing required fields</td>
+                <td>Ensure all required fields (title, content, category, author) are filled</td>
+            </tr>
+            <tr>
+                <td>Cannot see Edit/Delete buttons</td>
+                <td>Not logged in as admin</td>
+                <td>Log in with admin credentials</td>
+            </tr>
+            <tr>
+                <td>Changes not appearing</td>
+                <td>Browser cache</td>
+                <td>Clear browser cache or hard refresh the page</td>
+            </tr>
+        </table>
+
+        <h3>10.2 Browser Compatibility</h3>
+        <p>The LifeVibe admin panel is optimized for modern browsers. For best experience, use:</p>
+        <ul>
+            <li>Chrome (version 90+)</li>
+            <li>Firefox (version 88+)</li>
+            <li>Safari (version 14+)</li>
+            <li>Edge (version 90+)</li>
+        </ul>
+
+        <h2 id="support">11. Support Information</h2>
+
+        <h3>11.1 Getting Help</h3>
+        <p>If you encounter issues not covered in this guide:</p>
+        
+        <div class="step">
+            <strong>Step 1:</strong> Check this user guide for relevant solutions
+        </div>
+        
+        <div class="step">
+            <strong>Step 2:</strong> Try basic troubleshooting (refresh page, clear cache)
+        </div>
+        
+        <div class="step">
+            <strong>Step 3:</strong> Contact the system administrator with:
+            <ul>
+                <li>Detailed description of the issue</li>
+                <li>Steps you took before the problem occurred</li>
+                <li>Screenshots if applicable</li>
+                <li>Browser and operating system information</li>
+            </ul>
+        </div>
+
+        <h3>11.2 Security Reminders</h3>
+        <div class="warning">
+            <ul>
+                <li><strong>Keep Credentials Secure:</strong> Never share your admin login details</li>
+                <li><strong>Log Out When Done:</strong> Always log out when finished with admin tasks</li>
+                <li><strong>Use Strong Passwords:</strong> Ensure your admin password is strong and unique</li>
+                <li><strong>Report Suspicious Activity:</strong> Contact support if you notice unusual activity</li>
+            </ul>
+        </div>
+
+        <h3>11.3 System Maintenance</h3>
+        <p>The platform may occasionally undergo maintenance. During these periods:</p>
+        <ul>
+            <li>Admin functions may be temporarily unavailable</li>
+            <li>You will receive advance notice when possible</li>
+            <li>The public website will remain accessible for viewing</li>
+            <li>Any unsaved work should be saved locally as a backup</li>
+        </ul>
+
+        <div class="footer">
+            <p><strong>LifeVibe Blog Platform Admin Guide</strong><br>
+            Version 1.0 | January 2025<br>
+            For internal use by authorized administrators and editors only</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,443 @@
+openapi: 3.0.3
+info:
+  title: LifeVibe Blog Platform API
+  description: |
+    REST API for the LifeVibe blog platform, providing endpoints for blog post management and admin authentication.
+    
+    ## Features
+    - CRUD operations for blog posts
+    - JWT-based admin authentication
+    - Category-based post organization (Travel, Food, Wellness)
+    - Comprehensive error handling
+    
+    ## Authentication
+    Admin endpoints require JWT token authentication. Obtain a token by logging in via the `/api/admin/login` endpoint.
+    
+  version: 1.0.0
+  contact:
+    name: LifeVibe API Support
+    email: support@lifevibe.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:5000
+    description: Development server
+  - url: https://api.lifevibe.com
+    description: Production server
+
+paths:
+  /posts:
+    get:
+      summary: Get all blog posts
+      description: Retrieve all blog posts sorted by creation date (newest first)
+      tags:
+        - Posts
+      responses:
+        '200':
+          description: Successfully retrieved posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+              example:
+                - _id: "507f1f77bcf86cd799439011"
+                  title: "Amazing Travel Destination"
+                  content: "Discover the beauty of this hidden gem..."
+                  category: "Travel"
+                  author: "John Doe"
+                  imageURL: "https://example.com/image.jpg"
+                  createdAt: "2025-01-15T10:30:00Z"
+                - _id: "507f1f77bcf86cd799439012"
+                  title: "Healthy Breakfast Recipe"
+                  content: "Start your day with this nutritious meal..."
+                  category: "Food"
+                  author: "Jane Smith"
+                  imageURL: "https://example.com/breakfast.jpg"
+                  createdAt: "2025-01-14T08:15:00Z"
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+    post:
+      summary: Create a new blog post
+      description: Create a new blog post (admin authentication required)
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostInput'
+            example:
+              title: "My Travel Adventure"
+              content: "I recently visited this amazing destination..."
+              category: "Travel"
+              author: "John Doe"
+              imageURL: "https://example.com/travel.jpg"
+      responses:
+        '201':
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              example:
+                _id: "507f1f77bcf86cd799439013"
+                title: "My Travel Adventure"
+                content: "I recently visited this amazing destination..."
+                category: "Travel"
+                author: "John Doe"
+                imageURL: "https://example.com/travel.jpg"
+                createdAt: "2025-01-15T12:00:00Z"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /posts/{id}:
+    get:
+      summary: Get a specific blog post
+      description: Retrieve a blog post by its ID
+      tags:
+        - Posts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: MongoDB ObjectID of the post
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        '200':
+          description: Successfully retrieved post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              example:
+                _id: "507f1f77bcf86cd799439011"
+                title: "Amazing Travel Destination"
+                content: "Discover the beauty of this hidden gem..."
+                category: "Travel"
+                author: "John Doe"
+                imageURL: "https://example.com/image.jpg"
+                createdAt: "2025-01-15T10:30:00Z"
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+    put:
+      summary: Update a blog post
+      description: Update an existing blog post (admin authentication required)
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: MongoDB ObjectID of the post
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+          example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostInput'
+            example:
+              title: "Updated Travel Adventure"
+              content: "Updated content with more details..."
+              category: "Travel"
+              author: "John Doe"
+              imageURL: "https://example.com/updated-image.jpg"
+      responses:
+        '200':
+          description: Post updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              example:
+                _id: "507f1f77bcf86cd799439011"
+                title: "Updated Travel Adventure"
+                content: "Updated content with more details..."
+                category: "Travel"
+                author: "John Doe"
+                imageURL: "https://example.com/updated-image.jpg"
+                createdAt: "2025-01-15T10:30:00Z"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      summary: Delete a blog post
+      description: Delete a blog post (admin authentication required)
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: MongoDB ObjectID of the post
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        '200':
+          description: Post deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Post deleted"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /api/admin/login:
+    post:
+      summary: Admin login
+      description: Authenticate admin user and receive JWT token
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              username: "admin"
+              password: "admin123"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              example:
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjQxMjIyNjAwLCJleHAiOjE2NDEyMjk4MDB9.signature"
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: "Invalid credentials"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from /api/admin/login endpoint
+
+  schemas:
+    Post:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: MongoDB ObjectID
+          example: "507f1f77bcf86cd799439011"
+        title:
+          type: string
+          description: Post title
+          example: "Amazing Travel Destination"
+        content:
+          type: string
+          description: Post content
+          example: "Discover the beauty of this hidden gem..."
+        category:
+          type: string
+          enum: [Travel, Food, Wellness]
+          description: Post category
+          example: "Travel"
+        author:
+          type: string
+          description: Author name
+          example: "John Doe"
+        imageURL:
+          type: string
+          format: uri
+          description: Optional image URL
+          example: "https://example.com/image.jpg"
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: "2025-01-15T10:30:00Z"
+      required:
+        - _id
+        - title
+        - content
+        - category
+        - author
+        - createdAt
+
+    PostInput:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Post title
+          example: "Amazing Travel Destination"
+        content:
+          type: string
+          minLength: 10
+          description: Post content
+          example: "Discover the beauty of this hidden gem..."
+        category:
+          type: string
+          enum: [Travel, Food, Wellness]
+          description: Post category
+          example: "Travel"
+        author:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Author name
+          example: "John Doe"
+        imageURL:
+          type: string
+          format: uri
+          description: Optional image URL
+          example: "https://example.com/image.jpg"
+      required:
+        - title
+        - content
+        - category
+        - author
+
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Admin username
+          example: "admin"
+        password:
+          type: string
+          description: Admin password
+          example: "admin123"
+      required:
+        - username
+        - password
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT token for authentication
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      required:
+        - token
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Invalid data"
+        message:
+          type: string
+          description: Error message (alternative field name)
+          example: "Invalid credentials"
+        code:
+          type: string
+          description: Error code (optional)
+          example: "VALIDATION_ERROR"
+        details:
+          type: object
+          description: Additional error details (optional)
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Invalid data"
+
+    Unauthorized:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            no_token:
+              summary: No token provided
+              value:
+                message: "No token provided"
+            invalid_token:
+              summary: Invalid token
+              value:
+                message: "Invalid token"
+            not_admin:
+              summary: Not authorized as admin
+              value:
+                message: "Not authorized as admin"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Post not found"
+
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Server error"
+
+tags:
+  - name: Posts
+    description: Blog post management operations
+  - name: Authentication
+    description: Admin authentication operations
+
+externalDocs:
+  description: Find out more about LifeVibe
+  url: https://lifevibe.com
