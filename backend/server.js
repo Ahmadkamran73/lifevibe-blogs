@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import postRoutes from './routes/posts.js';
+import adminRoutes from './routes/admin.js';
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 // API routes
 app.use('/posts', postRoutes);
+app.use('/api/admin', adminRoutes);
 
 // DB connection
 mongoose.connect(process.env.MONGO_URI)

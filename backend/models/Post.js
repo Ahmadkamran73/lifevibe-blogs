@@ -5,7 +5,9 @@ const postSchema = new mongoose.Schema({
   content: { type: String, required: true },
   category: { type: String, enum: ['Travel', 'Food', 'Wellness'], required: true },
   author: { type: String, required: true },
+  imageURL: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model('Post', postSchema);
+const Post = mongoose.model('Post', postSchema);
+export default Post;
