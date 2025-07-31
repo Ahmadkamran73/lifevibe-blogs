@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeVibe Blog Platform - Architecture Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-tab.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .diagram-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .diagram-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .diagram-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .diagram-description {
+            color: #666;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .mermaid {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .features-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card ul {
+            list-style: none;
+        }
+
+        .feature-card li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .feature-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .security-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+
+        .tech-card {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        .dev-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-tab {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>LifeVibe Blog Platform</h1>
+            <p>Complete Architecture Documentation</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showDiagram('overview')">System Overview</button>
+            <button class="nav-tab" onclick="showDiagram('components')">Components</button>
+            <button class="nav-tab" onclick="showDiagram('dataflow')">Data Flow</button>
+            <button class="nav-tab" onclick="showDiagram('security')">Security</button>
+            <button class="nav-tab" onclick="showDiagram('techstack')">Tech Stack</button>
+            <button class="nav-tab" onclick="showDiagram('deployment')">Deployment</button>
+        </div>
+
+        <!-- System Overview -->
+        <div id="overview" class="diagram-container active">
+            <h2 class="diagram-title">System Architecture Overview</h2>
+            <p class="diagram-description">High-level view of the complete system architecture showing client, API gateway, backend, and data layers.</p>
+            <div class="mermaid">
+                graph TB
+                    subgraph "Client Layer"
+                        UI[React Frontend<br/>Vite + Bootstrap]
+                        Browser[Web Browser]
+                    end
+
+                    subgraph "API Gateway"
+                        Proxy[Vite Proxy<br/>localhost:3000]
+                    end
+
+                    subgraph "Backend Layer"
+                        Express[Express Server<br/>localhost:5000]
+                        Auth[Authentication<br/>JWT Middleware]
+                        Routes[API Routes]
+                    end
+
+                    subgraph "Data Layer"
+                        MongoDB[(MongoDB<br/>Database)]
+                        PostModel[Post Model<br/>Mongoose Schema]
+                    end
+
+                    subgraph "External Services"
+                        JWT[JWT Token<br/>Management]
+                    end
+
+                    %% Client connections
+                    Browser --> UI
+                    UI --> Proxy
+
+                    %% API Gateway connections
+                    Proxy --> Express
+
+                    %% Backend connections
+                    Express --> Auth
+                    Express --> Routes
+                    Auth --> JWT
+                    Routes --> PostModel
+
+                    %% Data connections
+                    PostModel --> MongoDB
+
+                    %% Styling
+                    classDef clientLayer fill:#e1f5fe
+                    classDef backendLayer fill:#f3e5f5
+                    classDef dataLayer fill:#e8f5e8
+                    classDef externalLayer fill:#fff3e0
+
+                    class UI,Browser clientLayer
+                    class Express,Auth,Routes backendLayer
+                    class MongoDB,PostModel dataLayer
+                    class JWT externalLayer
+            </div>
+        </div>
+
+        <!-- Components -->
+        <div id="components" class="diagram-container">
+            <h2 class="diagram-title">Detailed Component Architecture</h2>
+            <p class="diagram-description">Detailed view of all React components, backend services, and their relationships.</p>
+            <div class="mermaid">
+                graph TB
+                    subgraph "Frontend Components"
+                        App[App.jsx<br/>Context Provider]
+                        Router[React Router]
+                        
+                        subgraph "Pages"
+                            Home[Home.jsx]
+                            AddPost[AddPost.jsx]
+                            EditPost[EditPost.jsx]
+                            PostDetail[PostDetail.jsx]
+                            AdminLogin[AdminLogin.jsx]
+                            NotFound[NotFound.jsx]
+                        end
+                        
+                        subgraph "Components"
+                            Navbar[Navbar.jsx]
+                            PostList[PostList.jsx]
+                            PostCard[PostCard.jsx]
+                            Footer[Footer.jsx]
+                        end
+                        
+                        subgraph "State Management"
+                            AdminContext[AdminContext<br/>isAdmin, login, logout]
+                            LocalStorage[localStorage<br/>adminToken]
+                        end
+                    end
+
+                    subgraph "Backend Services"
+                        Server[server.js<br/>Express App]
+                        
+                        subgraph "Routes"
+                            PostRoutes[posts.js<br/>CRUD Operations]
+                            AdminRoutes[admin.js<br/>Authentication]
+                        end
+                        
+                        subgraph "Controllers"
+                            PostController[postController.js<br/>Business Logic]
+                            AdminController[adminController.js<br/>Login Logic]
+                        end
+                        
+                        subgraph "Middleware"
+                            AuthMiddleware[auth.js<br/>JWT Verification]
+                        end
+                        
+                        subgraph "Models"
+                            PostModel[Post.js<br/>Mongoose Schema]
+                        end
+                    end
+
+                    subgraph "Database"
+                        MongoDB[(MongoDB<br/>Posts Collection)]
+                    end
+
+                    %% Frontend connections
+                    App --> Router
+                    Router --> Home
+                    Router --> AddPost
+                    Router --> EditPost
+                    Router --> PostDetail
+                    Router --> AdminLogin
+                    Router --> NotFound
+                    
+                    App --> AdminContext
+                    AdminContext --> LocalStorage
+                    
+                    Home --> PostList
+                    PostList --> PostCard
+                    App --> Navbar
+                    App --> Footer
+
+                    %% Backend connections
+                    Server --> PostRoutes
+                    Server --> AdminRoutes
+                    
+                    PostRoutes --> PostController
+                    AdminRoutes --> AdminController
+                    
+                    PostController --> AuthMiddleware
+                    AdminController --> AuthMiddleware
+                    
+                    PostController --> PostModel
+                    PostModel --> MongoDB
+
+                    %% Styling
+                    classDef frontend fill:#e3f2fd
+                    classDef backend fill:#f3e5f5
+                    classDef database fill:#e8f5e8
+
+                    class App,Router,Home,AddPost,EditPost,PostDetail,AdminLogin,NotFound,Navbar,PostList,PostCard,Footer,AdminContext,LocalStorage frontend
+                    class Server,PostRoutes,AdminRoutes,PostController,AdminController,AuthMiddleware,PostModel backend
+                    class MongoDB database
+            </div>
+        </div>
+
+        <!-- Data Flow -->
+        <div id="dataflow" class="diagram-container">
+            <h2 class="diagram-title">Data Flow Architecture</h2>
+            <p class="diagram-description">Sequence diagrams showing how data flows through the system for different operations.</p>
+            <div class="mermaid">
+                sequenceDiagram
+                    participant U as User
+                    participant F as Frontend
+                    participant P as Proxy
+                    participant B as Backend
+                    participant D as Database
+                    participant J as JWT
+
+                    %% Public Flow - View Posts
+                    U->>F: Visit Home Page
+                    F->>P: GET /posts
+                    P->>B: Forward Request
+                    B->>D: Query Posts
+                    D->>B: Return Posts
+                    B->>P: JSON Response
+                    P->>F: Forward Response
+                    F->>U: Display Posts
+
+                    %% Admin Flow - Login
+                    U->>F: Admin Login
+                    F->>P: POST /api/admin/login
+                    P->>B: Forward Request
+                    B->>J: Generate JWT
+                    J->>B: Return Token
+                    B->>P: JSON Response
+                    P->>F: Forward Response
+                    F->>F: Store Token (localStorage)
+                    F->>U: Redirect to Home
+
+                    %% Admin Flow - Create Post
+                    U->>F: Create New Post
+                    F->>F: Get Token from localStorage
+                    F->>P: POST /posts (with Authorization)
+                    P->>B: Forward Request
+                    B->>J: Verify JWT
+                    J->>B: Token Valid
+                    B->>D: Save Post
+                    D->>B: Confirm Save
+                    B->>P: JSON Response
+                    P->>F: Forward Response
+                    F->>U: Show Success Message
+            </div>
+        </div>
+
+        <!-- Security -->
+        <div id="security" class="diagram-container">
+            <h2 class="diagram-title">Security Architecture</h2>
+            <p class="diagram-description">Authentication flow and security considerations in the system.</p>
+            <div class="mermaid">
+                graph TB
+                    subgraph "Authentication Flow"
+                        Login[Admin Login Form]
+                        Credentials[Hardcoded Credentials<br/>admin/admin123]
+                        JWTGen[JWT Token Generation]
+                        TokenStorage[localStorage]
+                        TokenVerification[JWT Verification]
+                    end
+
+                    subgraph "Protected Routes"
+                        CreatePost[POST /posts]
+                        UpdatePost[PUT /posts/:id]
+                        DeletePost[DELETE /posts/:id]
+                    end
+
+                    subgraph "Public Routes"
+                        GetPosts[GET /posts]
+                        GetPost[GET /posts/:id]
+                    end
+
+                    subgraph "Security Concerns"
+                        PlainText[Plain Text Password]
+                        WeakSecret[Weak JWT Secret]
+                        NoValidation[No Input Validation]
+                        NoSanitization[No Data Sanitization]
+                    end
+
+                    %% Authentication flow
+                    Login --> Credentials
+                    Credentials --> JWTGen
+                    JWTGen --> TokenStorage
+                    TokenStorage --> TokenVerification
+
+                    %% Protected routes
+                    TokenVerification --> CreatePost
+                    TokenVerification --> UpdatePost
+                    TokenVerification --> DeletePost
+
+                    %% Security issues
+                    Credentials --> PlainText
+                    JWTGen --> WeakSecret
+                    CreatePost --> NoValidation
+                    UpdatePost --> NoSanitization
+
+                    %% Styling
+                    classDef auth fill:#fff3e0
+                    classDef protected fill:#fce4ec
+                    classDef public fill:#e8f5e8
+                    classDef security fill:#ffebee
+
+                    class Login,Credentials,JWTGen,TokenStorage,TokenVerification auth
+                    class CreatePost,UpdatePost,DeletePost protected
+                    class GetPosts,GetPost public
+                    class PlainText,WeakSecret,NoValidation,NoSanitization security
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div id="techstack" class="diagram-container">
+            <h2 class="diagram-title">Technology Stack</h2>
+            <p class="diagram-description">Complete technology stack used in the LifeVibe Blog Platform.</p>
+            <div class="mermaid">
+                graph LR
+                    subgraph "Frontend Stack"
+                        React[React 19.1.0]
+                        Vite[Vite 7.0.4]
+                        Bootstrap[Bootstrap 5.3.7]
+                        Router[React Router DOM 7.7.1]
+                    end
+
+                    subgraph "Backend Stack"
+                        Node[Node.js]
+                        Express[Express 4.18.2]
+                        Mongoose[Mongoose 7.6.1]
+                        JWT[jsonwebtoken 9.0.2]
+                        CORS[cors 2.8.5]
+                    end
+
+                    subgraph "Database"
+                        MongoDB[(MongoDB)]
+                    end
+
+                    subgraph "Development Tools"
+                        Nodemon[Nodemon 3.1.10]
+                        ESLint[ESLint 9.30.1]
+                    end
+
+                    React --> Vite
+                    Vite --> Bootstrap
+                    Vite --> Router
+                    
+                    Node --> Express
+                    Express --> Mongoose
+                    Express --> JWT
+                    Express --> CORS
+                    
+                    Mongoose --> MongoDB
+                    
+                    Node --> Nodemon
+                    Vite --> ESLint
+
+                    %% Styling
+                    classDef frontend fill:#e3f2fd
+                    classDef backend fill:#f3e5f5
+                    classDef database fill:#e8f5e8
+                    classDef tools fill:#fff3e0
+
+                    class React,Vite,Bootstrap,Router frontend
+                    class Node,Express,Mongoose,JWT,CORS backend
+                    class MongoDB database
+                    class Nodemon,ESLint tools
+            </div>
+        </div>
+
+        <!-- Deployment -->
+        <div id="deployment" class="diagram-container">
+            <h2 class="diagram-title">Deployment Architecture</h2>
+            <p class="diagram-description">Development and production environment setup.</p>
+            <div class="mermaid">
+                graph TB
+                    subgraph "Development Environment"
+                        DevFrontend[Frontend Dev Server<br/>localhost:3000]
+                        DevBackend[Backend Dev Server<br/>localhost:5000]
+                        DevDB[MongoDB Local/Atlas]
+                    end
+
+                    subgraph "Production Environment"
+                        ProdFrontend[Frontend Build<br/>Static Files]
+                        ProdBackend[Backend Server<br/>Production Port]
+                        ProdDB[MongoDB Atlas]
+                    end
+
+                    subgraph "Environment Variables"
+                        MONGO_URI[MONGO_URI]
+                        JWT_SECRET[JWT_SECRET]
+                        PORT[PORT]
+                    end
+
+                    %% Development flow
+                    DevFrontend --> DevBackend
+                    DevBackend --> DevDB
+                    
+                    %% Production flow
+                    ProdFrontend --> ProdBackend
+                    ProdBackend --> ProdDB
+                    
+                    %% Environment variables
+                    DevBackend --> MONGO_URI
+                    DevBackend --> JWT_SECRET
+                    DevBackend --> PORT
+                    
+                    ProdBackend --> MONGO_URI
+                    ProdBackend --> JWT_SECRET
+                    ProdBackend --> PORT
+
+                    %% Styling
+                    classDef dev fill:#e8f5e8
+                    classDef prod fill:#f3e5f5
+                    classDef env fill:#fff3e0
+
+                    class DevFrontend,DevBackend,DevDB dev
+                    class ProdFrontend,ProdBackend,ProdDB prod
+                    class MONGO_URI,JWT_SECRET,PORT env
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2 class="diagram-title">Key Features Summary</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>✅ Implemented Features</h3>
+                    <ul>
+                        <li>CRUD Operations: Create, Read, Update, Delete posts</li>
+                        <li>Admin Authentication: JWT-based admin login</li>
+                        <li>Responsive Design: Bootstrap-based responsive UI</li>
+                        <li>Real-time Updates: Immediate UI updates after operations</li>
+                        <li>Error Handling: Comprehensive error handling and loading states</li>
+                        <li>Modern Stack: React 19, Vite, Express, MongoDB</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card security-card">
+                    <h3>⚠️ Security Considerations</h3>
+                    <ul>
+                        <li>Hardcoded admin credentials</li>
+                        <li>Weak JWT secret default</li>
+                        <li>No input validation/sanitization</li>
+                        <li>No password hashing</li>
+                        <li>No rate limiting</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card tech-card">
+                    <h3>🔧 Development Features</h3>
+                    <ul>
+                        <li>Hot reloading (Vite + Nodemon)</li>
+                        <li>Proxy configuration for API calls</li>
+                        <li>ESLint for code quality</li>
+                        <li>Modular component architecture</li>
+                        <li>Context API for state management</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card dev-card">
+                    <h3>📊 Architecture Benefits</h3>
+                    <ul>
+                        <li>Modular Design: Clear separation between frontend and backend</li>
+                        <li>Scalable Structure: Easy to add new features and components</li>
+                        <li>Modern Stack: Uses latest versions of React, Express, and MongoDB</li>
+                        <li>Development Friendly: Hot reloading and proxy configuration</li>
+                        <li>Responsive UI: Bootstrap-based responsive design</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>LifeVibe Blog Platform Architecture Documentation</p>
+        <p>Built with Mermaid.js and modern web technologies</p>
+    </div>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            },
+            sequence: {
+                useMaxWidth: true,
+                showSequenceNumbers: false
+            }
+        });
+
+        // Tab navigation
+        function showDiagram(diagramId) {
+            // Hide all diagrams
+            const diagrams = document.querySelectorAll('.diagram-container');
+            diagrams.forEach(diagram => {
+                diagram.classList.remove('active');
+            });
+
+            // Show selected diagram
+            document.getElementById(diagramId).classList.add('active');
+
+            // Update active tab
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click animations to tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Add ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
